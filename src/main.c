@@ -14,6 +14,25 @@
  * along with motor-controller.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Config 1 */
+#pragma config FOSC = INTOSC
+#pragma config WDTE = OFF
+#pragma config PWRTE = OFF
+#pragma config MCLRE = OFF
+#pragma config CP = OFF
+#pragma config CPD = OFF
+#pragma config BOREN = ON
+#pragma config CLKOUTEN = OFF
+#pragma config IESO = OFF
+#pragma config FCMEN = ON
+
+/* Config 2 */
+#pragma config LVP = OFF
+#pragma config BORV = LO
+#pragma config STVREN = ON
+#pragma config PLLEN = OFF
+#pragma config WRT = OFF
+
 #include <xc.h>
 #include "mcu.h"
 
