@@ -35,6 +35,11 @@
 
 #include <xc.h>
 #include "mcu.h"
+#include "periph_conf.h"
+#include "periph/gpio.h"
+#include "status.h"
+
+#define STATUS_LED          (GPIO_PIN(PORT_C, 0))
 
 int main()
 {
@@ -42,6 +47,9 @@ int main()
 
     /* Change clock speed to 8MHz */
     OSCCON = (0b1110 << _OSCCON_IRCF_POSITION);
+
+    status_init(STATUS_LED);
+    status_set_mode(STATUS_BLINK_FAST);
 
     while (1) {
 
