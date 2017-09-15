@@ -1,4 +1,4 @@
-SOURCES = src/main.c src/status.c src/radio.c
+SOURCES = src/main.c src/status.c src/radio.c src/motor.c
 INCLUDES := -Isrc/
 OBJDIR := obj/
 OUTDIR := bin/
