@@ -40,7 +40,6 @@
 #include "periph_conf.h"
 #include "periph/gpio.h"
 #include "periph/timer0.h"
-#include "periph/timer1.h"
 #include "periph/watchdog.h"
 #include "radio.h"
 #include "status.h"
