@@ -34,6 +34,7 @@
 #pragma config WRT = OFF
 
 #include <xc.h>
+#include "constants.h"
 #include "mcu.h"
 #include "motor.h"
 #include "periph_conf.h"
@@ -70,7 +71,7 @@ int main()
     status_set_mode(STATUS_BLINK_FAST);
 
     uint16_t neutral = radio_find_neutral();
-    if (neutral < 500 || neutral > 1000) {
+    if (neutral < MIN_TARGET || neutral > MAX_TARGET) {
         mcu_reset();
     }
 
