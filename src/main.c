@@ -16,7 +16,7 @@
 
 /* Config 1 */
 #pragma config FOSC = INTOSC
-#pragma config WDTE = OFF
+#pragma config WDTE = 1
 #pragma config PWRTE = OFF
 #pragma config MCLRE = OFF
 #pragma config CP = OFF
@@ -40,6 +40,7 @@
 #include "periph/gpio.h"
 #include "periph/timer0.h"
 #include "periph/timer1.h"
+#include "periph/watchdog.h"
 #include "radio.h"
 #include "status.h"
 
@@ -55,6 +56,8 @@ int main()
 {
     mcu_init();
     timer0_configure(TIMER0_PRESCALER_256);
+    watchdog_configure(WATCHDOG_PERIOD_1S);
+    watchdog_enable();
 
     /* Change clock speed to 8MHz */
     OSCCON = (0b1110 << _OSCCON_IRCF_POSITION);

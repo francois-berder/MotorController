@@ -19,6 +19,7 @@
 #include "periph_conf.h"
 #include "periph/gpio.h"
 #include "periph/timer1.h"
+#include "periph/watchdog.h"
 #include "radio.h"
 
 static uint8_t pin;
@@ -38,6 +39,8 @@ static void radio_callback(void)
         value = TMR1H;
         value <<= 8;
         value |= TMR1L;
+
+        watchdog_kick();
         gpio_init_irq(pin, GPIO_RISING, radio_callback);
     }
 }
