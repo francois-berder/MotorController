@@ -26,6 +26,7 @@
 #define FORWARD         (1)
 #define BACKWARD        (0)
 
+static uint16_t neutral_pos;
 static uint16_t target;
 static uint16_t position;
 static uint8_t left_pwm;
@@ -37,10 +38,11 @@ static void motor_stop(void)
     pwm_set_duty_cycle(right_pwm, 0);
 }
 
-void motor_init(uint8_t _left_pwm, uint8_t _right_pwm)
+void motor_init(uint8_t _left_pwm, uint8_t _right_pwm, uint16_t neutral)
 {
-    position = NEUTRAL_POS;
-    target = NEUTRAL_POS;
+    neutral_pos = neutral;
+    position = neutral_pos;
+    target = neutral_pos;
 
     left_pwm = _left_pwm;
     right_pwm = _right_pwm;
@@ -80,8 +82,8 @@ void motor_tick(void)
     }
 
     /* Check if direction must be changed */
-    dir = position > NEUTRAL_POS;
-    target_dir = target > NEUTRAL_POS;
+    dir = position > neutral_pos;
+    target_dir = target > neutral_pos;
     if (target_dir != dir) {
         motor_stop();
         return;
@@ -89,9 +91,9 @@ void motor_tick(void)
 
     /* Apply power */
     if (dir == FORWARD) {
-        power = position - NEUTRAL_POS;
+        power = position - neutral_pos;
     } else {
-        power = NEUTRAL_POS - position;
+        power = neutral_pos - position;
     }
 
     if (power < MIN_POWER) {

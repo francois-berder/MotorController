@@ -27,8 +27,9 @@
  *
  * @param[in] left_pwm
  * @param[in] right_pwm
+ * @param[in] neutral
  */
-void motor_init(uint8_t left_pwm, uint8_t right_pwm);
+void motor_init(uint8_t left_pwm, uint8_t right_pwm, uint16_t neutral);
 
 /**
  * @brief Set target
