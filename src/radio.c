@@ -29,20 +29,22 @@ static uint16_t buffer[100];
 
 static void radio_callback(void)
 {
-    if (IOCAP & (1U << (pin & 0x4))) {
+    uint8_t bitmask = 1 << (pin & 0x4);
+    if (IOCAP & bitmask) {
         TMR1L = 0;
         TMR1H = 0;
         timer1_start();
-        gpio_init_irq(pin, GPIO_FALLING, radio_callback);
+        IOCAP &= ~bitmask;
+        IOCAN |= bitmask;
     } else {
         timer1_stop();
-        is_new = 1;
         value = TMR1H;
         value <<= 8;
         value |= TMR1L;
-
+        is_new = 1;
         watchdog_kick();
-        gpio_init_irq(pin, GPIO_RISING, radio_callback);
+        IOCAP |= bitmask;
+        IOCAN &= ~bitmask;
     }
 }
 
@@ -50,21 +52,25 @@ void radio_init(uint8_t input_pin)
 {
     is_new = 0;
     pin = input_pin;
-    gpio_init_irq(pin, GPIO_RISING, radio_callback);
+    gpio_init_irq(pin, GPIO_EDGE, radio_callback);
     timer1_configure(TIMER1_PRESCALER_1, 0);
 }
 
 uint8_t radio_has_data(void)
 {
-    return is_new;
+    uint8_t is;
+    mcu_disable_interrupts();
+    is = is_new;
+    mcu_enable_interrupts();
+    return is;
 }
 
 uint16_t radio_get_data(void)
 {
     uint16_t v;
     mcu_disable_interrupts();
-    is_new = 0;
     v = value;
+    is_new = 0;
     mcu_enable_interrupts();
     return v;
 }
