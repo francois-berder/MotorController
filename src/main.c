@@ -52,6 +52,8 @@
 #define LEFT_PWM            (2)
 #define RIGHT_PWM           (4)
 
+static uint16_t past[3];
+
 int main()
 {
     mcu_init();
@@ -77,13 +79,28 @@ int main()
     gpio_init_out(RIGHT_PWM_PIN, 0);
     status_set_mode(STATUS_FLASH);
 
+    past[0] = neutral;
+    past[1] = neutral;
+    past[2] = neutral;
+
     while (1) {
+        uint16_t data, target;
+
         motor_tick();
         mcu_delay(1);
         if (!radio_has_data())
             continue;
 
-        motor_set_target(radio_get_data());
+        /* Filter data from radio */
+        data = radio_get_data();
+        target = data + past[0] + past[1] + past[2];
+        target >>= 2;
+
+        past[2] = past[1];
+        past[1] = past[0];
+        past[0] = target;
+
+        motor_set_target(target);
     }
 
     return 0;
