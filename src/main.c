@@ -64,12 +64,18 @@ int main()
 
     radio_init(RADIO_PIN);
 
-    motor_init(LEFT_PWM, RIGHT_PWM);
-    gpio_init_out(LEFT_PWM_PIN, 0);
-    gpio_init_out(RIGHT_PWM_PIN, 0);
-
     status_init(STATUS_LED);
     status_set_mode(STATUS_BLINK_FAST);
+
+    uint16_t neutral = radio_find_neutral();
+    if (neutral < 2000 || neutral > 4000) {
+        mcu_reset();
+    }
+
+    motor_init(LEFT_PWM, RIGHT_PWM, neutral);
+    gpio_init_out(LEFT_PWM_PIN, 0);
+    gpio_init_out(RIGHT_PWM_PIN, 0);
+    status_set_mode(STATUS_FLASH);
 
     while (1) {
         motor_tick();
