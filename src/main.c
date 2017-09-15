@@ -74,9 +74,7 @@ int main()
         mcu_reset();
     }
 
-    motor_init(LEFT_PWM, RIGHT_PWM, neutral);
-    gpio_init_out(LEFT_PWM_PIN, 0);
-    gpio_init_out(RIGHT_PWM_PIN, 0);
+    motor_init(LEFT_PWM_PIN, RIGHT_PWM_PIN, LEFT_PWM, RIGHT_PWM, neutral);
     status_set_mode(STATUS_FLASH);
 
     past[0] = neutral;

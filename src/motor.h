@@ -20,16 +20,19 @@
 #include <stdint.h>
 
 /**
- * @brief Initiale motor
+ * @brief Initiase motor
  *
- * This function does not initialise the pwm pins.
+ * This function initialises the pwm pins as output.
  * Both PWM are configured and enabled but duty cycle is set to 0.
  *
+ * @param[in] left_pin
+ * @param[in] right_pin
  * @param[in] left_pwm
  * @param[in] right_pwm
  * @param[in] neutral
  */
-void motor_init(uint8_t left_pwm, uint8_t right_pwm, uint16_t neutral);
+void motor_init(uint8_t left_pin, uint8_t right_pin,
+                uint8_t left_pwm, uint8_t right_pwm, uint16_t neutral);
 
 /**
  * @brief Set target

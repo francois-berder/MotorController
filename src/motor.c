@@ -15,8 +15,9 @@
  */
 
 #include "constants.h"
- #include "motor.h"
+#include "motor.h"
 #include "periph_conf.h"
+#include "periph/gpio.h"
 #include "periph/pwm.h"
 
 #define MAX_STEP        (16)
@@ -36,7 +37,8 @@ static void motor_stop(void)
     pwm_set_duty_cycle(right_pwm, 0);
 }
 
-void motor_init(uint8_t _left_pwm, uint8_t _right_pwm, uint16_t neutral)
+void motor_init(uint8_t left_pin, uint8_t right_pin,
+                uint8_t _left_pwm, uint8_t _right_pwm, uint16_t neutral)
 {
     neutral_pos = neutral;
     position = neutral_pos;
@@ -50,6 +52,8 @@ void motor_init(uint8_t _left_pwm, uint8_t _right_pwm, uint16_t neutral)
     pwm_enable(left_pwm);
     pwm_enable(right_pwm);
     motor_stop();
+    gpio_init_out(left_pin, 0);
+    gpio_init_out(right_pin, 0);
 }
 
 void motor_set_target(uint16_t _target)
