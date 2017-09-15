@@ -57,12 +57,12 @@ static uint16_t past[3];
 int main()
 {
     mcu_init();
-    timer0_configure(TIMER0_PRESCALER_256);
+    timer0_configure(TIMER0_PRESCALER_64);
     watchdog_configure(WATCHDOG_PERIOD_1S);
     watchdog_enable();
 
-    /* Change clock speed to 8MHz */
-    OSCCON = (0b1110 << _OSCCON_IRCF_POSITION);
+    /* Change clock speed to 2MHz */
+    OSCCON = (0b1100 << _OSCCON_IRCF_POSITION);
 
     radio_init(RADIO_PIN);
 
@@ -70,7 +70,7 @@ int main()
     status_set_mode(STATUS_BLINK_FAST);
 
     uint16_t neutral = radio_find_neutral();
-    if (neutral < 2000 || neutral > 4000) {
+    if (neutral < 500 || neutral > 1000) {
         mcu_reset();
     }
 

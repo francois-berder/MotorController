@@ -18,11 +18,11 @@
 #include "periph_conf.h"
 #include "periph/pwm.h"
 
-#define MAX_STEP        (64)
-#define MIN_POWER       (100)
-#define NEUTRAL_POS     (3000UL)
-#define MIN_TARGET      (2000UL)
-#define MAX_TARGET      (4000UL)
+#define MAX_STEP        (16)
+#define MIN_POWER       (25)
+#define NEUTRAL_POS     (1500UL)
+#define MIN_TARGET      (500UL)
+#define MAX_TARGET      (1000UL)
 #define FORWARD         (1)
 #define BACKWARD        (0)
 
@@ -47,8 +47,8 @@ void motor_init(uint8_t _left_pwm, uint8_t _right_pwm, uint16_t neutral)
     left_pwm = _left_pwm;
     right_pwm = _right_pwm;
 
-    pwm_configure(left_pwm, 4, 0xFF, TIMER4_PRESCALER_4, TIMER4_POSTCALER_1);
-    pwm_configure(right_pwm , 6, 0xFF, TIMER6_PRESCALER_4, TIMER6_POSTCALER_1);
+    pwm_configure(left_pwm, 4, 0xFF, TIMER4_PRESCALER_1, TIMER4_POSTCALER_1);
+    pwm_configure(right_pwm , 6, 0xFF, TIMER6_PRESCALER_1, TIMER6_POSTCALER_1);
     pwm_enable(left_pwm);
     pwm_enable(right_pwm);
     motor_stop();
@@ -102,7 +102,6 @@ void motor_tick(void)
     }
 
     /* Convert power to PWM duty cycle */
-    power >>= 2;
     if (power > 0xFF) {
         power = 0xFF;
     }

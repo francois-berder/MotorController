@@ -50,8 +50,8 @@ void status_init(uint8_t led_pin)
     pin = led_pin;
     gpio_init_out(pin, 0);
 
-    /* Timer 2 configured to interrupt 10 times/second with Fosc = 8MHz */
-    timer_configure(2, TIMER2_PRESCALER_64, TIMER2_POSTCALER_14, 223, status_callback);
+    /* Timer 2 configured to interrupt 10 times/second with Fosc = 2MHz */
+    timer_configure(2, TIMER2_PRESCALER_16, TIMER2_POSTCALER_14, 223, status_callback);
 }
 
 void status_set_mode(uint8_t status_mode)
