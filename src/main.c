@@ -55,9 +55,57 @@
 static uint16_t buffer[32];
 static uint16_t past[3];
 
+static uint8_t is_buffer_invalid(uint8_t threshold)
+{
+    uint8_t invalid_count = 0;
+    uint8_t i;
+
+    for (i = 0; i < 32; ++i) {
+        if (buffer[i] < MIN_TARGET || buffer[i] > MAX_TARGET)
+            invalid_count++;
+    }
+
+    return invalid_count > threshold;
+}
+
+static uint16_t find_neutral(void)
+{
+    uint8_t i, valid_data = 0;
+    uint32_t neutral = 0;
+
+    for (i = 0; i < 3; ++i) {
+        uint8_t j;
+
+        for (j = 0; j < 32; ++j) {
+            while (!radio_has_data()) {
+            }
+            buffer[j] = radio_get_data();
+        }
+
+        /* Check if we get valid buffer */
+        if (is_buffer_invalid(8))
+            mcu_reset();
+
+        for (j = 0; j < 32; ++j) {
+            if (buffer[j] >= MIN_TARGET && buffer[j] <= MAX_TARGET) {
+                ++valid_data;
+                neutral += buffer[j];
+            }
+        }
+    }
+
+    neutral /= valid_data;
+
+    if (neutral < MIN_TARGET || neutral > MAX_TARGET)
+        mcu_reset();
+
+    return neutral;
+}
+
 int main()
 {
     uint8_t i;
+    uint16_t neutral;
 
     mcu_init();
     timer0_configure(TIMER0_PRESCALER_64);
@@ -72,9 +120,7 @@ int main()
     status_init(STATUS_LED);
     status_set_mode(STATUS_BLINK_FAST);
 
-    uint16_t neutral = radio_find_neutral();
-    if (neutral < MIN_TARGET || neutral > MAX_TARGET)
-        mcu_reset();
+    neutral = find_neutral();
 
     motor_init(LEFT_PWM_PIN, RIGHT_PWM_PIN, LEFT_PWM, RIGHT_PWM, neutral);
     status_set_mode(STATUS_FLASH);
@@ -87,7 +133,7 @@ int main()
 
     while (1) {
         uint16_t data, target;
-        uint8_t i, invalid_data_count = 0;
+        uint8_t i;
 
         motor_tick();
         mcu_delay(1);
@@ -101,10 +147,7 @@ int main()
             buffer[i] = buffer[i - 1];
         buffer[0] = data;
 
-        for (i = 0; i < 32; ++i)
-            if (buffer[i] < MIN_TARGET || buffer[i] > MAX_TARGET)
-                invalid_data_count++;
-        if (invalid_data_count > 20)
+        if (is_buffer_invalid(20))
             mcu_reset();
 
         /* Filter data from radio */

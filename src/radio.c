@@ -25,7 +25,6 @@
 static uint8_t pin;
 static volatile uint16_t value;
 static volatile uint8_t is_new;
-static uint16_t buffer[100];
 
 static void radio_callback(void)
 {
@@ -76,21 +75,4 @@ uint16_t radio_get_data(void)
     is_new = 0;
     mcu_enable_interrupts();
     return v;
-}
-
-uint16_t radio_find_neutral(void)
-{
-    uint8_t i;
-    uint32_t neutral = 0;
-
-    for (i = 0; i < 100; ++i) {
-        while (!radio_has_data()) {
-        }
-        buffer[i] = radio_get_data();
-    }
-
-    for (i = 0; i < 100; ++i)
-        neutral += buffer[i];
-
-    return neutral / 100;
 }

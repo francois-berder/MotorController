@@ -39,11 +39,4 @@ uint8_t radio_has_data(void);
  */
 uint16_t radio_get_data(void);
 
-/**
- * @brief Compute neutral value by averaging 100 values
- *
- * Note that this function takes a few seconds to execute
- */
-uint16_t radio_find_neutral(void);
-
 #endif
