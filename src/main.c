@@ -52,10 +52,13 @@
 #define LEFT_PWM            (2)
 #define RIGHT_PWM           (4)
 
+static uint16_t buffer[32];
 static uint16_t past[3];
 
 int main()
 {
+    uint8_t i;
+
     mcu_init();
     timer0_configure(TIMER0_PRESCALER_64);
     watchdog_configure(WATCHDOG_PERIOD_1S);
@@ -80,20 +83,35 @@ int main()
     past[0] = neutral;
     past[1] = neutral;
     past[2] = neutral;
+    for (i = 0; i < 32; ++i)
+        buffer[i] = neutral;
 
     while (1) {
         uint16_t data, target;
+        uint8_t i, invalid_data_count = 0;
 
         motor_tick();
         mcu_delay(1);
         if (!radio_has_data())
             continue;
 
-        /* Filter data from radio */
         data = radio_get_data();
+
+        /* Check if we get valid data */
+        for (i = 31; i > 0; --i)
+            buffer[i] = buffer[i - 1];
+        buffer[0] = data;
+
+        for (i = 0; i < 32; ++i) {
+            if (buffer[i] < MIN_TARGET || buffer[i] > MAX_TARGET)
+                invalid_data_count++;
+        }
+        if (invalid_data_count > 20)
+            mcu_reset();
+
+        /* Filter data from radio */
         target = data + past[0] + past[1] + past[2];
         target >>= 2;
-
         past[2] = past[1];
         past[1] = past[0];
         past[0] = target;
