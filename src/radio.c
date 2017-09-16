@@ -30,6 +30,7 @@ static uint16_t buffer[100];
 static void radio_callback(void)
 {
     uint8_t bitmask = 1 << (pin & 0x4);
+
     if (IOCAP & bitmask) {
         TMR1L = 0;
         TMR1H = 0;
@@ -59,6 +60,7 @@ void radio_init(uint8_t input_pin)
 uint8_t radio_has_data(void)
 {
     uint8_t is;
+
     mcu_disable_interrupts();
     is = is_new;
     mcu_enable_interrupts();
@@ -68,6 +70,7 @@ uint8_t radio_has_data(void)
 uint16_t radio_get_data(void)
 {
     uint16_t v;
+
     mcu_disable_interrupts();
     v = value;
     is_new = 0;
@@ -81,13 +84,13 @@ uint16_t radio_find_neutral(void)
     uint32_t neutral = 0;
 
     for (i = 0; i < 100; ++i) {
-        while (!radio_has_data()) {}
+        while (!radio_has_data()) {
+        }
         buffer[i] = radio_get_data();
     }
 
-    for (i = 0; i < 100; ++i) {
+    for (i = 0; i < 100; ++i)
         neutral += buffer[i];
-    }
 
     return neutral / 100;
 }

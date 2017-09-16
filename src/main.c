@@ -73,9 +73,8 @@ int main()
     status_set_mode(STATUS_BLINK_FAST);
 
     uint16_t neutral = radio_find_neutral();
-    if (neutral < MIN_TARGET || neutral > MAX_TARGET) {
+    if (neutral < MIN_TARGET || neutral > MAX_TARGET)
         mcu_reset();
-    }
 
     motor_init(LEFT_PWM_PIN, RIGHT_PWM_PIN, LEFT_PWM, RIGHT_PWM, neutral);
     status_set_mode(STATUS_FLASH);
@@ -102,10 +101,9 @@ int main()
             buffer[i] = buffer[i - 1];
         buffer[0] = data;
 
-        for (i = 0; i < 32; ++i) {
+        for (i = 0; i < 32; ++i)
             if (buffer[i] < MIN_TARGET || buffer[i] > MAX_TARGET)
                 invalid_data_count++;
-        }
         if (invalid_data_count > 20)
             mcu_reset();
 

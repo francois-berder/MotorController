@@ -61,15 +61,13 @@ void status_set_mode(uint8_t status_mode)
     mode = status_mode;
     counter = 0;
 
-    if (mode == STATUS_ON || mode == STATUS_OFF) {
+    if (mode == STATUS_ON || mode == STATUS_OFF)
         timer_stop(2);
-    } else {
+    else
         timer_start(2);
-    }
 
-    if (mode == STATUS_ON) {
+    if (mode == STATUS_ON)
         gpio_write(pin, 1);
-    } else {
+    else
         gpio_write(pin, 0);
-    }
 }

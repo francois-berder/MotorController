@@ -48,7 +48,7 @@ void motor_init(uint8_t left_pin, uint8_t right_pin,
     right_pwm = _right_pwm;
 
     pwm_configure(left_pwm, 4, 0xFF, TIMER4_PRESCALER_1, TIMER4_POSTCALER_1);
-    pwm_configure(right_pwm , 6, 0xFF, TIMER6_PRESCALER_1, TIMER6_POSTCALER_1);
+    pwm_configure(right_pwm, 6, 0xFF, TIMER6_PRESCALER_1, TIMER6_POSTCALER_1);
     pwm_enable(left_pwm);
     pwm_enable(right_pwm);
     motor_stop();
@@ -58,9 +58,8 @@ void motor_init(uint8_t left_pin, uint8_t right_pin,
 
 void motor_set_target(uint16_t _target)
 {
-    if (_target >= MIN_TARGET && _target <= MAX_TARGET) {
+    if (_target >= MIN_TARGET && _target <= MAX_TARGET)
         target = _target;
-    }
 }
 
 void motor_tick(void)
@@ -71,15 +70,13 @@ void motor_tick(void)
     /* Move position towards target */
     if (position > target) {
         uint16_t diff = position - target;
-        if (diff > MAX_STEP) {
+        if (diff > MAX_STEP)
             diff = MAX_STEP;
-        }
         position -= diff;
     } else {
         uint16_t diff = target - position;
-        if (diff > MAX_STEP) {
+        if (diff > MAX_STEP)
             diff = MAX_STEP;
-        }
         position += diff;
     }
 
@@ -92,11 +89,10 @@ void motor_tick(void)
     }
 
     /* Apply power */
-    if (dir == FORWARD) {
+    if (dir == FORWARD)
         power = position - neutral_pos;
-    } else {
+    else
         power = neutral_pos - position;
-    }
 
     if (power < MIN_POWER) {
         motor_stop();
@@ -104,9 +100,8 @@ void motor_tick(void)
     }
 
     /* Convert power to PWM duty cycle */
-    if (power > 0xFF) {
+    if (power > 0xFF)
         power = 0xFF;
-    }
 
     if (dir == FORWARD) {
         pwm_set_duty_cycle(right_pwm, power);
