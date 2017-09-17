@@ -64,21 +64,22 @@ void radio_init(uint8_t input_pin)
 
 uint8_t radio_has_data(void)
 {
-    uint8_t is;
+    uint8_t is, ctx;
 
-    mcu_disable_interrupts();
+    __HAL_DISABLE_INTERRUPTS(ctx);
     is = is_new;
-    mcu_enable_interrupts();
+    __HAL_ENABLE_INTERRUPTS(ctx);
     return is;
 }
 
 uint16_t radio_get_data(void)
 {
     uint16_t v;
+    uint8_t ctx;
 
-    mcu_disable_interrupts();
+    __HAL_DISABLE_INTERRUPTS(ctx);
     v = value;
     is_new = 0;
-    mcu_enable_interrupts();
+    __HAL_ENABLE_INTERRUPTS(ctx);
     return v;
 }
