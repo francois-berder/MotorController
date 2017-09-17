@@ -19,12 +19,13 @@ $(OUTDIR)/firmware.hex: $(FRAMEWORK_OUTDIR)/framework.lpp $(SOURCES)
 	xc8 --chip=$(CHIP) -o$@ \
 		--objdir=$(OBJDIR) --outdir=$(OUTDIR) \
 		$^ $(INCLUDES) $(if $(DEBUG),,-DNDEBUG)
+	$(if $(DEBUG),, ./writebuildinfo.py $@)
 
 $(FRAMEWORK_OUTDIR)/framework.lpp:
-	make --directory=framework/ CHIP=$(CHIP) $(if $(DEBUG),debug, release)
+	$(MAKE) --directory=framework/ CHIP=$(CHIP) $(if $(DEBUG),debug, release)
 
 .PHONY: clean
 clean:
-	make --directory=framework CHIP=$(CHIP) clean
+	$(MAKE) --directory=framework CHIP=$(CHIP) clean
 	rm -Rf $(OUTDIR)
 	rm -Rf $(OBJDIR)
