@@ -48,12 +48,18 @@ static void radio_callback(void)
     }
 }
 
+static void radio_timer_overflow(void)
+{
+    /* This interrupt should never be executed */
+    mcu_reset();
+}
+
 void radio_init(uint8_t input_pin)
 {
     is_new = 0;
     pin = input_pin;
     gpio_init_irq(pin, GPIO_EDGE, radio_callback);
-    timer1_configure(TIMER1_PRESCALER_1, 0);
+    timer1_configure(TIMER1_PRESCALER_1, radio_timer_overflow);
 }
 
 uint8_t radio_has_data(void)
