@@ -5,9 +5,10 @@
 #  offset  |  size  |  description
 #    0     |    8   |  release timestamp (big endian)
 #    8     |    4   |  XC8 compiler version (ASCII)
-#    12    |   40   |  SHA1 hash of last commit of MotorController repo (ASCII)
+#    12    |   20   |  SHA1 hash of last commit of MotorController repo
 
 import argparse
+import binascii
 import re
 import subprocess
 import time
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     parser.add_argument("firmware", help="Path to firmware hex file")
     args = parser.parse_args()
 
-    data = [0xFF] * 52
+    data = [0xFF] * 32
 
     # Store timestamp in data
     print('timestamp: {}'.format(get_timestamp()))
@@ -90,7 +91,7 @@ if __name__ == "__main__":
 
     # Store commit hash in data
     print('commit hash: ' + get_commit_hash())
-    for index, b in enumerate(str.encode(get_commit_hash())):
+    for index, b in enumerate(binascii.a2b_hex(get_commit_hash())):
         data[COMMIT_HASH_OFFSET + index] = b
 
     print('Writing info to firmware...')
