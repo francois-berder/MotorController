@@ -3,9 +3,9 @@
 # Write build information to EEPROM by modifying firmware HEX file.
 #
 #  offset  |  size  |  description
-#    0     |    8   |  release timestamp (little endian)
+#    0     |    8   |  release timestamp (big endian)
 #    8     |    4   |  XC8 compiler version (ASCII)
-#    12    |   40   |  SHA1 hash of last commit of MotorController repo
+#    12    |   40   |  SHA1 hash of last commit of MotorController repo (ASCII)
 
 import argparse
 import re
