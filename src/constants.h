@@ -17,7 +17,7 @@
 #ifndef __CONSTANTS_H
 #define __CONSTANTS_H
 
-#define MIN_TARGET      (500UL)
-#define MAX_TARGET      (1000UL)
+#define MIN_TARGET      (450UL)
+#define MAX_TARGET      (1050UL)
 
 #endif
