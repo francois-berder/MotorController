@@ -108,6 +108,16 @@ int main()
     uint16_t neutral;
 
     mcu_init();
+
+    /* Initialise all unconnected pins as output, low state */
+    gpio_init_out(GPIO_PIN(PORT_A, 0), 0);
+    gpio_init_out(GPIO_PIN(PORT_A, 1), 0);
+    gpio_init_out(GPIO_PIN(PORT_A, 2), 0);
+    gpio_init_out(GPIO_PIN(PORT_A, 5), 0);
+    gpio_init_out(GPIO_PIN(PORT_C, 2), 0);
+    gpio_init_out(GPIO_PIN(PORT_C, 4), 0);
+    gpio_init_out(GPIO_PIN(PORT_C, 5), 0);
+
     timer0_configure(TIMER0_PRESCALER_64);
     watchdog_configure(WATCHDOG_PERIOD_1S);
     watchdog_enable();
