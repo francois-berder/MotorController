@@ -2,8 +2,9 @@
 
 MotorController is a small board which mostly consists of a PIC16F1825 and a H-bridge to control one motor.
 The PIC uses the same protocol than servo so you can plug this board directly to a radio receptor.
+Kicad files are available in ```controller.zip```. This archive also contains the ZIP file that I sent to Seeedstudio to make the PCB.
 
-I will soon upload kicad files of the PCB and photos of the assembled board.
+I will soon upload photos of the assembled board.
 
 #### How to build
 
@@ -31,3 +32,6 @@ If the firmware is built in release mode (default), then a python script modifie
 |   8    |   4  | XC8 compiler version in ASCII |
 |   12   |  20  | SHA1 hash of last commit of MotorController |
 
+##### Known issues
+
+  - Not connected pins of the PIC16F1825 are left floating, you might want to change the design of the PCB to connect them to ground
