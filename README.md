@@ -6,7 +6,7 @@ Kicad files are available in ```controller.zip```. This archive also contains th
 
 I will soon upload photos of the assembled board.
 
-#### How to build
+### How to build
 
 ```bash
 $ git submodule init
@@ -21,7 +21,7 @@ This creates firmware.hex in ```bin/``` folder.
 There are some issues with make dependencies. Hence, if you make any change to
 framework, first run ```make clean``` then ```make```. You can also run ```make debug``` if you want to compile assertions.
 
-#### EEPROM layout
+### EEPROM layout
 
 
 If the firmware is built in release mode (default), then a python script modifies the hex file to store information in the EEPROM.
@@ -32,6 +32,6 @@ If the firmware is built in release mode (default), then a python script modifie
 |   8    |   4  | XC8 compiler version in ASCII |
 |   12   |  20  | SHA1 hash of last commit of MotorController |
 
-##### Known issues
+### Known issues
 
   - Not connected pins of the PIC16F1825 are left floating, you might want to change the design of the PCB to connect them to ground
