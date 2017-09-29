@@ -13,13 +13,19 @@ $ git submodule init
 $ git submodule update
 $ make
 ```
-
+You can also run ```make debug``` if you want to compile assertions.
 Note that you only need to update the git submodule once.
 
 
 This creates firmware.hex in ```bin/``` folder.
-There are some issues with make dependencies. Hence, if you make any change to
-framework, first run ```make clean``` then ```make```. You can also run ```make debug``` if you want to compile assertions.
+
+### Firmware description
+
+When the PIC starts running, it starts computing the neutral position. This takes a few seconds. During these moments, do **not** touch your radio. The LED will be blinking fast during this operation. Once this is finished, the PIC blinks the LED 100ms every 2 seconds.
+
+The PIC will reset if:
+   - no data was received since one second (watchdog resets PIC)
+   - too many invalid data have been received
 
 ### EEPROM layout
 
@@ -35,3 +41,4 @@ If the firmware is built in release mode (default), then a python script modifie
 ### Known issues
 
   - Not connected pins of the PIC16F1825 are left floating, you might want to change the design of the PCB to connect them to ground
+  - There are some issues with make dependencies. Hence, if you make any change to framework, first run ```make clean``` then ```make```.
