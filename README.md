@@ -1,7 +1,7 @@
 ## MotorController
 
 MotorController is a small board which mostly consists of a PIC16F1825 and a H-bridge to control one motor.
-The PIC uses the same protocol than servo so you can plug this board directly to a radio receptor.
+The PIC uses the same [protocol than a servo](https://en.wikipedia.org/wiki/Servo_control) so you can plug this board directly to a radio receptor.
 Kicad files are available in ```controller.zip```. This archive also contains the ZIP file that I sent to Seeedstudio to make the PCB.
 
 I will soon upload photos of the assembled board.
