@@ -40,7 +40,7 @@ If the firmware is built in release mode (default), then a python script modifie
 | offset | size | description |
 | ------ | ---- | ----------- |
 |   0    |   8  | UNIX UTC release timestamp in big endian |
-|   8    |   4  | XC8 compiler version in ASCII |
+|   8    |   4  | XC8 compiler version in ASCII e.g. "1.42" |
 |   12   |  20  | SHA1 hash of last commit of MotorController |
 
 ### Known issues
