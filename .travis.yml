@@ -13,5 +13,9 @@ before_script:
  - sudo ./${COMPILER_INSTALLER} --mode unattended --netservername localhost
  - export PATH=$PATH:/opt/microchip/xc8/${COMPILER_VERSION}/bin
 
+env:
+ - BUILD_TYPE=release
+ - BUILD_TYPE=debug
+
 script:
- - make release
+ - make ${BUILD_TYPE}
