@@ -1,4 +1,4 @@
-## MotorController
+## MotorController [![Build Status](https://travis-ci.org/francois-berder/MotorController.svg?branch=master)](https://travis-ci.org/francois-berder/MotorController)
 
 MotorController is a small board which mostly consists of a PIC16F1825 and a H-bridge to control one motor.
 The PIC uses the same [protocol than a servo](https://en.wikipedia.org/wiki/Servo_control) so you can plug this board directly to a radio receptor.
