@@ -14,10 +14,20 @@
  * along with motor-controller.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CONSTANTS_H
-#define __CONSTANTS_H
+#ifndef __CONFIG_H
+#define __CONFIG_H
 
+/*
+ * These two macros defines the range of valid values
+ * for radio input.
+ */
 #define MIN_TARGET      (450UL)
 #define MAX_TARGET      (1050UL)
+
+/* Maximal variation of power at each tick */
+#define MAX_STEP        (16)
+
+/* Minimal amount power to start driving motors */
+#define MIN_POWER       (25)
 
 #endif

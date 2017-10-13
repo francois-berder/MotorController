@@ -34,7 +34,7 @@
 #pragma config WRT = OFF
 
 #include <xc.h>
-#include "constants.h"
+#include "config.h"
 #include "mcu.h"
 #include "motor.h"
 #include "periph_conf.h"

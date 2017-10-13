@@ -14,14 +14,12 @@
  * along with motor-controller.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "constants.h"
+#include "config.h"
 #include "motor.h"
 #include "periph_conf.h"
 #include "periph/gpio.h"
 #include "periph/pwm.h"
 
-#define MAX_STEP        (16)
-#define MIN_POWER       (25)
 #define FORWARD         (1)
 #define BACKWARD        (0)
 
