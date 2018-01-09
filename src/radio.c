@@ -67,12 +67,7 @@ void radio_init(uint8_t input_pin)
 
 uint8_t radio_has_data(void)
 {
-    uint8_t is, ctx;
-
-    __HAL_DISABLE_INTERRUPTS(ctx);
-    is = is_new;
-    __HAL_ENABLE_INTERRUPTS(ctx);
-    return is;
+    return is_new;
 }
 
 uint16_t radio_get_data(void)
