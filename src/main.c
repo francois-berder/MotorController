@@ -42,7 +42,6 @@
 #include "motor.h"
 #include "periph_conf.h"
 #include "periph/gpio.h"
-#include "periph/timer0.h"
 #include "periph/watchdog.h"
 #include "radio.h"
 #include "status.h"
@@ -121,7 +120,6 @@ int main()
     gpio_init_out(GPIO_PIN(PORT_C, 4), 0);
     gpio_init_out(GPIO_PIN(PORT_C, 5), 0);
 
-    timer0_configure(TIMER0_PRESCALER_64);
     watchdog_configure(WATCHDOG_PERIOD_1S);
     watchdog_enable();
 
@@ -136,7 +134,7 @@ int main()
     neutral = find_neutral();
 
     motor_init(LEFT_PWM_PIN, RIGHT_PWM_PIN, LEFT_PWM, RIGHT_PWM, neutral);
-    status_set_mode(STATUS_FLASH);
+    status_set_mode(STATUS_ON);
 
     past[0] = neutral;
     past[1] = neutral;
@@ -149,7 +147,21 @@ int main()
         uint8_t i;
 
         motor_tick();
-        mcu_delay(1);
+
+        /*
+         * Wait for a while (~1ms) after updating motor.
+         *
+         * We do not use mcu_ticks as it needs timer0.
+         * Unfortunately, the interrupt handler mechanism is very slow
+         * and timer0 triggers every millisecond. This means that
+         * irq on radio pin would get delayed and an invalid value
+         * would be read.
+         */
+        i = 255;
+        while (i--) {
+            asm("nop");
+        }
+
         if (!radio_has_data())
             continue;
 
