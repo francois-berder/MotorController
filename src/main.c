@@ -163,6 +163,10 @@ int main()
         if (is_buffer_invalid(20))
             mcu_reset();
 
+        /* If data is invalid, do not use it to control motor */
+        if (data < MIN_TARGET || data > MAX_TARGET)
+            continue;
+
         /* Filter data from radio */
         target = data + past[0] + past[1] + past[2];
         target >>= 2;
