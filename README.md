@@ -42,3 +42,23 @@ If the firmware is built in release mode (default), then a python script modifie
 |   0    |   8  | UNIX UTC release timestamp in big endian |
 |   8    |   4  | XC8 compiler version in ASCII e.g. "1.42" |
 |   12   |  20  | SHA1 hash of last commit of MotorController |
+
+### BOM
+
+|    part    | quantity |
+| ---------- | -------- |
+| PIC16F1825 | 1 |
+| 4N35       | 2 |
+| 14 pin DIL header | 1 |
+| 6 DIL header | 2 |
+| IRLB8748   | 4 |
+| IRF4905    | 2 |
+| LED 5mm    | 1 |
+| 100nF capacitor | 1 |
+| 10k resistor | 2 |
+| 470ohm resistor | 2 |
+| 2.2k resistor | 1 |
+| 1k resistor | 1 |
+| 1x6 pin header | 1 |
+| block terminal 2.54mm | 1 |
+| block terminal 5.08mm | 1 |
