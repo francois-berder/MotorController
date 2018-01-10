@@ -21,7 +21,7 @@ $(OUTDIR)/firmware.hex: $(FRAMEWORK_OUTDIR)/framework.lpp $(SOURCES)
 		$^ $(INCLUDES) $(if $(DEBUG),,-DNDEBUG)
 	$(if $(DEBUG),, ./writebuildinfo.py $@)
 
-$(FRAMEWORK_OUTDIR)/framework.lpp:
+$(FRAMEWORK_OUTDIR)/framework.lpp: force_look
 	$(MAKE) --directory=framework/ CHIP=$(CHIP) $(if $(DEBUG),debug, release)
 
 .PHONY: clean
@@ -29,3 +29,7 @@ clean:
 	$(MAKE) --directory=framework CHIP=$(CHIP) clean
 	rm -Rf $(OUTDIR)
 	rm -Rf $(OBJDIR)
+
+# Add dummy target to force make to run framework Makefile
+.PHONY: force_look
+force_look:
