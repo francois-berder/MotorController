@@ -42,9 +42,3 @@ If the firmware is built in release mode (default), then a python script modifie
 |   0    |   8  | UNIX UTC release timestamp in big endian |
 |   8    |   4  | XC8 compiler version in ASCII e.g. "1.42" |
 |   12   |  20  | SHA1 hash of last commit of MotorController |
-
-### Known issues
-
-  - Not connected pins of the PIC16F1825 are left floating, you might want to change the design of the PCB to connect them to ground
-  - Lack of resistor to limit current between pins RC1, RC3 and 4N35 optocouplers.
-  - There are some issues with make dependencies. Hence, if you make any change to framework, first run ```make clean``` then ```make```.
