@@ -108,6 +108,7 @@ int main()
 {
     uint8_t i;
     uint16_t neutral;
+    uint16_t counter;
 
     mcu_init();
 
@@ -134,7 +135,7 @@ int main()
     neutral = find_neutral();
 
     motor_init(LEFT_PWM_PIN, RIGHT_PWM_PIN, LEFT_PWM, RIGHT_PWM, neutral);
-    status_set_mode(STATUS_ON);
+    status_set_mode(STATUS_OFF);
 
     past[0] = neutral;
     past[1] = neutral;
@@ -142,6 +143,7 @@ int main()
     for (i = 0; i < 32; ++i)
         buffer[i] = neutral;
 
+    counter = 0;
     while (1) {
         uint16_t data, target;
         uint8_t i;
@@ -160,6 +162,20 @@ int main()
         i = 255;
         while (i--) {
             asm("nop");
+        }
+
+        /* Do not use status module to flash LED because it relies on timer2 */
+        ++counter;
+        if (gpio_read(STATUS_LED)) {
+            if (counter > 10) {
+                gpio_toggle(STATUS_LED);
+                counter = 0;
+            }
+        } else {
+            if (counter > 500) {
+                gpio_toggle(STATUS_LED);
+                counter = 0;
+            }
         }
 
         if (!radio_has_data())
