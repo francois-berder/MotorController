@@ -21,7 +21,7 @@ This creates firmware.hex in ```bin/``` folder.
 
 ### Firmware description
 
-When the PIC starts running, it computes the neutral position. This takes a few seconds as it computes the average of 72 to 96 entries. During these moments, do **not** touch your radio. The LED will be blinking fast during this operation. Once this is finished, the PIC turns on the LED.
+When the PIC starts running, it computes the neutral position. This takes a few seconds as it computes the average of 72 to 96 entries. During these moments, do **not** touch your radio. The LED will be blinking fast during this operation. Once this is finished, the PIC flashes the LED every 2-3 seconds.
 
 The PIC will reset if:
    - no data was received for one second (watchdog resets PIC)
@@ -36,10 +36,8 @@ Beware that the interrupt handler responsible for converting a radio signal to a
 
 ### Power consumption
 
-The board is using about 5mA with the current firmware.
-
-The LED takes about 2mA, the 2.2k Ohm pull-up resistor takes about 2mA and the microcontroller uses less than 1mA.
-If you want to save more power at the expense of motor control precision, you can lower the clock speed.
+Using a multimeter, it was found that the board takes about 2.5mA during initialisation, then 570uA was measured in idle (motor is not turning).
+If you want to save more power at the expense of motor control precision, you can lower the clock speed. Also, you can switch off the LED in the firmware.
 
 ### EEPROM layout
 
