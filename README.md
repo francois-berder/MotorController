@@ -32,7 +32,7 @@ The firmware takes about 1 second from full stop to maximum speed. You can adjus
 
 All of these numbers are dependent on the clock speed of the PIC. The firmware configures the PIC to use its internal oscillator at 2MHz. This is the minimum clock speed to ensure that the PWM output precision is 8 bits.
 
-Beware that the interrupt handler responsible for converting a radio signal to a number is **very** time sensitive. I had to disable all other interrupts (that is why the LED is not flashing during operation) to ensure that the firmware would always work. Otherwise, the motor would be turned on randomly for brief periods.
+Beware that the interrupt handler responsible for converting a radio signal to a number is **very** time sensitive. I had to disable all other interrupts to ensure that the firmware would always work. Otherwise, the motor would be turned on randomly for brief periods.
 
 ### Power consumption
 
